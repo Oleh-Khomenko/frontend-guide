@@ -1,0 +1,35 @@
+flowchart TD
+    A["Browser: resource request"] --> B{"Cache-Control?"}
+
+    B -->|"no-store"| NS["Always fetch from server\n(nothing is stored)"]
+    NS --> RESP200_NS["200 + full body"]
+
+    B -->|"no-cache"| NC["Cached, but\nrevalidation required"]
+    NC --> CR1{"Conditional request\nIf-None-Match / If-Modified-Since"}
+    CR1 -->|"Not changed"| R304_1["304 Not Modified\n(no body transferred)"]
+    CR1 -->|"Changed"| R200_1["200 + new body"]
+
+    B -->|"max-age=N"| MA{"Cache age\nvs max-age"}
+    MA -->|"Fresh\n(age < max-age)"| CACHE["Served from cache\n(0 ms, no network)"]
+
+    MA -->|"Stale\n(age > max-age)"| SWR{"stale-while-\nrevalidate=N?"}
+
+    SWR -->|"No"| CR2{"Conditional request"}
+    CR2 -->|"Not changed"| R304_2["304 Not Modified"]
+    CR2 -->|"Changed"| R200_2["200 + new body"]
+
+    SWR -->|"Yes, within N"| STALE["Served from cache\n+ background revalidation"]
+    SWR -->|"Yes, but N expired too"| CR3{"Conditional request"}
+    CR3 -->|"Not changed"| R304_3["304 Not Modified"]
+    CR3 -->|"Changed"| R200_3["200 + new body"]
+
+    style NS fill:#c92a2a,color:#fff
+    style CACHE fill:#2b8a3e,color:#fff
+    style STALE fill:#e67700,color:#fff
+    style R304_1 fill:#1864ab,color:#fff
+    style R304_2 fill:#1864ab,color:#fff
+    style R304_3 fill:#1864ab,color:#fff
+    style RESP200_NS fill:#c92a2a,color:#fff
+    style R200_1 fill:#c92a2a,color:#fff
+    style R200_2 fill:#c92a2a,color:#fff
+    style R200_3 fill:#c92a2a,color:#fff
