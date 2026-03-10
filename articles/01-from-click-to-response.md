@@ -24,7 +24,7 @@ performance.getEntriesByType('navigation')[0]
 
 Там буде повний таймлайн навігації – з мітками для кожного етапу, який ми розбираємо нижче. Після прочитання статті поверніться до секції [Як читати Navigation Timing](#як-читати-navigation-timing) в кінці – там реальний приклад для `google.com` з розбором кожного поля.
 
-![Navigation Timing у DevTools Console](images/navigation-timing.png)
+![Navigation Timing у DevTools Console](images/01-from-click-to-response/navigation-timing.png)
 
 ### Де тут можна втратити час?
 
@@ -84,7 +84,7 @@ Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
 ...браузер запам'ятає: цей домен – тільки HTTPS. Наступного разу він навіть не спробує HTTP – автоматично замінить протокол ще до відправки. В DevTools це видно як `307 Internal Redirect` – редирект, який відбувається локально, без мережі.
 
-![HSTS 307 Internal Redirect у DevTools](images/hsts-internal-redirect.png)
+![HSTS 307 Internal Redirect у DevTools](images/01-from-click-to-response/hsts-internal-redirect.png)
 
 Але є підступна деталь – "trust on first use". Якщо користувач ніколи не заходив на сайт, HSTS ще не записаний у браузер, і перший запит все одно піде по HTTP. Рішення – додати домен в **HSTS Preload List**, який вшитий прямо в код браузера. Після цього навіть перший візит буде по HTTPS.
 
@@ -120,7 +120,7 @@ Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
 `stale-while-revalidate=N` – "віддай застарілий кеш юзеру зараз, але у фоні тихенько оновись". Користувач бачить контент миттєво, а свіжу версію отримає наступного разу.
 
-![Cache-Control flow: як браузер вирішує звідки брати ресурс](images/cache-control-flow.png)
+![Cache-Control flow: як браузер вирішує звідки брати ресурс](images/01-from-click-to-response/cache-control-flow.png)
 
 `immutable` – каже браузеру не робити conditional request навіть при перезавантаженні сторінки (Cmd+R / F5). Без нього браузер при reload все одно відправить запит з `If-None-Match`, навіть якщо `max-age` ще не вийшов. Використовується для статики з content hash в імені – якщо контент змінився, URL теж зміниться, тому перевіряти немає сенсу.
 
@@ -222,13 +222,13 @@ TCP встановлює з'єднання через three-way handshake:
 
 QUIC, на якому побудований HTTP/3, працює поверх UDP і об'єднує транспорт і TLS в одне рукостискання – 1 RTT для нового з'єднання, 0-RTT для повторного. Плюс вирішує проблему head-of-line blocking: якщо пакет загубився в одному потоці, інші потоки продовжують працювати. У TCP всі чекають, поки загублений пакет перевідправлять.
 
-![HTTP/3 протокол у DevTools Network](images/h3-protocol.png)
+![HTTP/3 протокол у DevTools Network](images/01-from-click-to-response/h3-protocol.png)
 
 В DevTools → Security tab можна побачити деталі з'єднання. Порівняйте: HTTP/2 з TLS 1.3 (зліва) і HTTP/3 з QUIC (справа) – той самий шифр, але різний транспорт.
 
-![TLS 1.3 у DevTools Security tab](images/tls-1.3-devtools.png)
+![TLS 1.3 у DevTools Security tab](images/01-from-click-to-response/tls-1.3-devtools.png)
 
-![QUIC у DevTools Security tab](images/security-protocol-quic.png)
+![QUIC у DevTools Security tab](images/01-from-click-to-response/security-protocol-quic.png)
 
 ### Перевикористання з'єднань
 
@@ -254,7 +254,7 @@ CDN ([Content Delivery Network](https://developer.mozilla.org/en-US/docs/Glossar
 
 Але з CDN є граблі. Кешування HTML на edge означає, що після деплою користувачі можуть отримувати stale-контент, поки кеш не інвалідується. Потрібно або налаштувати purge API (у Cloudflare, Fastly, Akamai – у кожного свій), або використовувати короткий TTL для HTML на edge і довший – для статики з content hash. Без продуманої стратегії інвалідації CDN-кеш стає джерелом багів, а не оптимізацією.
 
-![DNS, TCP, TLS і server response у waterfall](images/dns-timing.png)
+![DNS, TCP, TLS і server response у waterfall](images/01-from-click-to-response/dns-timing.png)
 
 *Це запит з десктопа на швидкому з'єднанні – DNS 40 мс, Initial connection і SSL по 23 мс. Зверніть увагу: з'єднання було HTTP/3 (QUIC), тому "Initial connection" і "SSL" – це одна й та сама фаза QUIC handshake, а не два послідовних кроки. DevTools показує їх окремо, але реальний час з'єднання – один round trip (~23 мс), а не 46. На мобільному 4G ті ж етапи можуть зайняти в 3-5 разів довше.*
 
@@ -287,11 +287,11 @@ http://example.com
 
 Три редиректи. Кожен – 50-200 мс залежно від сервера і мережі. До 600 мс – і це ще до того, як почав завантажуватись HTML.
 
-![Ланцюжок редиректів у DevTools](images/redirect-issue.png)
+![Ланцюжок редиректів у DevTools](images/01-from-click-to-response/redirect-issue.png)
 
 HSTS може прибрати перший (http→https відбудеться локально), але решту треба фіксити на рівні серверної конфігурації. Ідеал – нуль редиректів. Канонічний URL має відповідати одразу.
 
-![Редирект з HSTS – 307 замість мережевого запиту](images/redirect-issue-with-307.png)
+![Редирект з HSTS – 307 замість мережевого запиту](images/01-from-click-to-response/redirect-issue-with-307.png)
 
 ### Стиснення: gzip vs brotli
 
@@ -323,7 +323,7 @@ Link: <https://fonts.googleapis.com>; rel=preconnect
 
 ## Як читати [Navigation Timing](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceNavigationTiming)
 
-![Діаграма послідовності Navigation Timing](images/performance-navigation-timing-timestamp-diagram.svg)
+![Діаграма послідовності Navigation Timing](images/01-from-click-to-response/performance-navigation-timing-timestamp-diagram.svg)
 
 Ось реальний таймлайн для `google.com` – тепер, коли ви знаєте кожен етап, ці числа мають сенс:
 

@@ -24,7 +24,7 @@ performance.getEntriesByType('navigation')[0]
 
 There you'll find the full navigation timeline – with timestamps for each stage we cover below. After reading the article, come back to the [How to Read Navigation Timing](#how-to-read-navigation-timing) section at the end – it has a real example for `google.com` with a breakdown of every field.
 
-![Navigation Timing in DevTools Console](images/navigation-timing.png)
+![Navigation Timing in DevTools Console](images/01-from-click-to-response/navigation-timing.png)
 
 ### Where Can You Lose Time Here?
 
@@ -84,7 +84,7 @@ Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
 ...the browser remembers: this domain is HTTPS only. Next time it won't even try HTTP – it automatically replaces the protocol before sending. In DevTools this shows up as `307 Internal Redirect` – a redirect that happens locally, without hitting the network.
 
-![HSTS 307 Internal Redirect in DevTools](images/hsts-internal-redirect.png)
+![HSTS 307 Internal Redirect in DevTools](images/01-from-click-to-response/hsts-internal-redirect.png)
 
 But there's a subtle catch – "trust on first use." If the user has never visited the site, HSTS isn't recorded in the browser yet, and the first request will still go over HTTP. The solution is to add the domain to the **HSTS Preload List**, which is baked directly into the browser's code. After that, even the first visit will be over HTTPS.
 
@@ -120,7 +120,7 @@ It's also worth mentioning **[bfcache](https://web.dev/articles/bfcache)** (back
 
 `stale-while-revalidate=N` – "serve the stale cache to the user right now, but quietly update in the background." The user sees content instantly, and gets the fresh version next time.
 
-![Cache-Control flow: how the browser decides where to get the resource](images/cache-control-flow.png)
+![Cache-Control flow: how the browser decides where to get the resource](images/01-from-click-to-response/cache-control-flow.png)
 
 `immutable` – tells the browser not to make a conditional request even when reloading the page (Cmd+R / F5). Without it, the browser will still send a request with `If-None-Match` on reload, even if `max-age` hasn't expired. Used for static assets with a content hash in the filename – if the content changes, the URL changes too, so there's no point in checking.
 
@@ -222,13 +222,13 @@ This difference directly impacts [TTFB](https://developer.mozilla.org/en-US/docs
 
 QUIC, which HTTP/3 is built on, runs over UDP and combines transport and TLS into a single handshake – 1 RTT for a new connection, 0-RTT for a returning one. Plus it solves the head-of-line blocking problem: if a packet is lost in one stream, other streams continue working. In TCP, everything waits while the lost packet is retransmitted.
 
-![HTTP/3 protocol in DevTools Network](images/h3-protocol.png)
+![HTTP/3 protocol in DevTools Network](images/01-from-click-to-response/h3-protocol.png)
 
 In DevTools → Security tab, you can see the connection details. Compare: HTTP/2 with TLS 1.3 (left) and HTTP/3 with QUIC (right) – same cipher, but different transport.
 
-![TLS 1.3 in DevTools Security tab](images/tls-1.3-devtools.png)
+![TLS 1.3 in DevTools Security tab](images/01-from-click-to-response/tls-1.3-devtools.png)
 
-![QUIC in DevTools Security tab](images/security-protocol-quic.png)
+![QUIC in DevTools Security tab](images/01-from-click-to-response/security-protocol-quic.png)
 
 ### Connection Reuse
 
@@ -254,7 +254,7 @@ CDN ([Content Delivery Network](https://developer.mozilla.org/en-US/docs/Glossar
 
 But there are pitfalls with CDNs. Caching HTML on the edge means that after deployment, users may receive stale content until the cache is invalidated. You need to either set up a purge API (Cloudflare, Fastly, Akamai – each has their own), or use a short TTL for HTML on the edge and a longer one for static assets with content hashes. Without a well-thought-out invalidation strategy, CDN caching becomes a source of bugs, not an optimization.
 
-![DNS, TCP, TLS and server response in waterfall](images/dns-timing.png)
+![DNS, TCP, TLS and server response in waterfall](images/01-from-click-to-response/dns-timing.png)
 
 *This is a desktop request on a fast connection – DNS 40 ms, Initial connection and SSL at 23 ms each. Note: the connection was HTTP/3 (QUIC), so "Initial connection" and "SSL" are actually the same phase of the QUIC handshake, not two sequential steps. DevTools shows them separately, but the real connection time is a single round trip (~23 ms), not 46. On mobile 4G, these same stages can take 3-5x longer.*
 
@@ -287,11 +287,11 @@ http://example.com
 
 Three redirects. Each one – 50-200 ms depending on the server and network. Up to 600 ms – and that's before the HTML even starts loading.
 
-![Redirect chain in DevTools](images/redirect-issue.png)
+![Redirect chain in DevTools](images/01-from-click-to-response/redirect-issue.png)
 
 HSTS can eliminate the first one (http→https happens locally), but the rest need to be fixed at the server configuration level. The ideal – zero redirects. The canonical URL should respond directly.
 
-![Redirect with HSTS – 307 instead of a network request](images/redirect-issue-with-307.png)
+![Redirect with HSTS – 307 instead of a network request](images/01-from-click-to-response/redirect-issue-with-307.png)
 
 ### Compression: gzip vs brotli
 
@@ -323,7 +323,7 @@ An important point: the browser doesn't wait for the entire HTML to download. It
 
 ## How to Read [Navigation Timing](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceNavigationTiming)
 
-![Navigation Timing sequence diagram](images/performance-navigation-timing-timestamp-diagram.svg)
+![Navigation Timing sequence diagram](images/01-from-click-to-response/performance-navigation-timing-timestamp-diagram.svg)
 
 Here's a real timeline for `google.com` – now that you know each stage, these numbers make sense:
 
