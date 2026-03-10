@@ -1,8 +1,8 @@
-# Frontend Optimization from First Click
+# Frontend Optimization from First Click – Part 1.
 
 When I was trying to understand frontend optimization, one thing surprised me: there's plenty of information out there, but it's scattered and often superficial. One article explains DNS, another covers caching, a third discusses rendering – but rarely does one go deeper than general diagrams, like how the browser code that builds the render tree or performs compositing actually works. And none of them connect these topics into a single chain: from click to pixel on screen. As a result, you know individual facts but can't see the full picture. This series is my attempt to gather everything I know, structure it, and lay it out in a logical sequence – for myself and for anyone who finds it useful.
 
-# Part 1. From Click to Response: What Happens Before the First Byte
+# From Click to Response: What Happens Before the First Byte
 
 You click a link – and it seems like nothing happens. Maybe half a second, maybe a full second. But in reality, during that time the browser manages to parse the URL, check the cache, find the server's IP address somewhere on another continent, shake hands via TCP and TLS, and only then send the request. Each of these steps can fly by in milliseconds – or eat up a noticeable chunk of the time budget.
 
