@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="840" viewBox="0 0 1600 840" font-family="ui-monospace, 'SF Mono', Menlo, monospace">
+  <defs>
+    <linearGradient id="bgGrad3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="840" fill="url(#bgGrad3)"/>
+
+  <!-- series kicker -->
+  <text x="120" y="150" font-size="26" fill="#64748b" letter-spacing="6">FRONTEND OPTIMIZATION FROM THE FIRST CLICK</text>
+
+  <!-- part -->
+  <text x="120" y="300" font-size="110" font-weight="bold" fill="#e2e8f0">Part 3</text>
+
+  <!-- topic -->
+  <text x="120" y="390" font-size="44" fill="#38bdf8">Priorities, fonts &amp; images</text>
+  <text x="120" y="450" font-size="28" fill="#94a3b8">who wins the fight for the network</text>
+
+  <!-- waterfall motif -->
+  <g transform="translate(120, 540)">
+    <text x="0" y="28" font-size="22" fill="#94a3b8">html</text>
+    <rect x="160" y="6" width="300" height="30" rx="5" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1.5"/>
+
+    <text x="0" y="78" font-size="22" fill="#94a3b8">css</text>
+    <rect x="230" y="56" width="260" height="30" rx="5" fill="#312e81" stroke="#a78bfa" stroke-width="1.5"/>
+
+    <text x="0" y="128" font-size="22" fill="#94a3b8">font</text>
+    <rect x="250" y="106" width="220" height="30" rx="5" fill="#064e3b" stroke="#34d399" stroke-width="1.5"/>
+    <text x="490" y="128" font-size="20" fill="#34d399">preload</text>
+
+    <text x="0" y="178" font-size="22" fill="#94a3b8">hero.avif</text>
+    <rect x="250" y="156" width="380" height="30" rx="5" fill="#78350f" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="650" y="178" font-size="20" fill="#fbbf24">fetchpriority="high"</text>
+
+    <text x="0" y="228" font-size="22" fill="#94a3b8">app.js</text>
+    <rect x="320" y="206" width="300" height="30" rx="5" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+    <text x="640" y="228" font-size="20" fill="#64748b">defer</text>
+  </g>
+</svg>

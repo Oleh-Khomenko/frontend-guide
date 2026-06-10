@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="840" viewBox="0 0 1600 840" font-family="ui-monospace, 'SF Mono', Menlo, monospace">
+  <defs>
+    <marker id="arrowSky" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8"/>
+    </marker>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="840" fill="url(#bgGrad)"/>
+
+  <!-- series kicker -->
+  <text x="120" y="150" font-size="26" fill="#64748b" letter-spacing="6">FRONTEND OPTIMIZATION FROM THE FIRST CLICK</text>
+
+  <!-- part -->
+  <text x="120" y="300" font-size="110" font-weight="bold" fill="#e2e8f0">Part 2</text>
+
+  <!-- topic -->
+  <text x="120" y="390" font-size="44" fill="#38bdf8">HTML parsing, CSSOM &amp; scripts</text>
+  <text x="120" y="450" font-size="28" fill="#94a3b8">how bytes become the DOM and what stalls it</text>
+
+  <!-- pipeline motif -->
+  <g transform="translate(120, 560)">
+    <rect x="0" y="0" width="220" height="80" rx="10" fill="#312e81" stroke="#a78bfa" stroke-width="2"/>
+    <text x="110" y="48" text-anchor="middle" font-size="26" fill="#c4b5fd">bytes</text>
+
+    <line x1="220" y1="40" x2="290" y2="40" stroke="#38bdf8" stroke-width="3" marker-end="url(#arrowSky)"/>
+
+    <rect x="295" y="0" width="280" height="80" rx="10" fill="#0c4a6e" stroke="#38bdf8" stroke-width="2"/>
+    <text x="435" y="48" text-anchor="middle" font-size="26" fill="#bae6fd">tokenizer</text>
+
+    <line x1="575" y1="40" x2="645" y2="40" stroke="#38bdf8" stroke-width="3" marker-end="url(#arrowSky)"/>
+
+    <rect x="650" y="0" width="420" height="80" rx="10" fill="#0c4a6e" stroke="#38bdf8" stroke-width="2"/>
+    <text x="860" y="48" text-anchor="middle" font-size="26" fill="#bae6fd">tree construction</text>
+
+    <line x1="1070" y1="40" x2="1140" y2="40" stroke="#38bdf8" stroke-width="3" marker-end="url(#arrowSky)"/>
+
+    <rect x="1145" y="0" width="200" height="80" rx="10" fill="#134e4a" stroke="#2dd4bf" stroke-width="2"/>
+    <text x="1245" y="48" text-anchor="middle" font-size="28" font-weight="bold" fill="#99f6e4">DOM</text>
+  </g>
+</svg>

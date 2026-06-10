@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" font-family="ui-monospace, 'SF Mono', Menlo, monospace">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399"/>
+    </marker>
+    <marker id="arrowSky" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="680" fill="#0f172a"/>
+
+  <!-- Network box -->
+  <rect x="300" y="40" width="600" height="70" rx="10" fill="#312e81" stroke="#a78bfa" stroke-width="2"/>
+  <text x="600" y="70" text-anchor="middle" font-size="22" fill="#e2e8f0">TCP&#160;&#160;→&#160;&#160;Network I/O</text>
+  <text x="600" y="97" text-anchor="middle" font-size="17" fill="#a5b4fc">separate process, off the main thread</text>
+
+  <!-- bytes arrow -->
+  <line x1="600" y1="110" x2="600" y2="166" stroke="#94a3b8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="618" y="145" font-size="18" fill="#94a3b8">bytes</text>
+
+  <!-- Main thread box -->
+  <rect x="150" y="172" width="900" height="240" rx="14" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+  <text x="600" y="212" text-anchor="middle" font-size="24" font-weight="bold" fill="#e2e8f0" letter-spacing="4">MAIN THREAD</text>
+
+  <!-- pipeline inside -->
+  <rect x="195" y="240" width="180" height="56" rx="8" fill="#0c4a6e" stroke="#38bdf8" stroke-width="2"/>
+  <text x="285" y="274" text-anchor="middle" font-size="19" fill="#bae6fd">tokenizer</text>
+
+  <line x1="375" y1="268" x2="425" y2="268" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrowSky)"/>
+
+  <rect x="430" y="240" width="270" height="56" rx="8" fill="#0c4a6e" stroke="#38bdf8" stroke-width="2"/>
+  <text x="565" y="274" text-anchor="middle" font-size="19" fill="#bae6fd">tree construction</text>
+
+  <line x1="700" y1="268" x2="750" y2="268" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrowSky)"/>
+
+  <rect x="755" y="240" width="130" height="56" rx="8" fill="#134e4a" stroke="#2dd4bf" stroke-width="2"/>
+  <text x="820" y="274" text-anchor="middle" font-size="20" font-weight="bold" fill="#99f6e4">DOM</text>
+
+  <text x="600" y="345" text-anchor="middle" font-size="19" fill="#94a3b8">+ JS + CSSOM + layout + paint</text>
+  <text x="600" y="378" text-anchor="middle" font-size="17" fill="#64748b">parsed in chunks, with yield pauses</text>
+
+  <!-- arrow from scanner up to main thread -->
+  <line x1="330" y1="520" x2="330" y2="418" stroke="#34d399" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#arrowGreen)"/>
+  <text x="352" y="460" font-size="17" fill="#6ee7b7">while the parser is</text>
+  <text x="352" y="484" font-size="17" fill="#6ee7b7">blocked on a script</text>
+
+  <!-- Preload scanner box -->
+  <rect x="150" y="524" width="360" height="92" rx="12" fill="#064e3b" stroke="#34d399" stroke-width="2"/>
+  <text x="330" y="578" text-anchor="middle" font-size="21" font-weight="bold" fill="#a7f3d0" letter-spacing="2">PRELOAD SCANNER</text>
+
+  <text x="560" y="560" font-size="18" fill="#94a3b8">speculatively scans raw HTML ahead,</text>
+  <text x="560" y="590" font-size="18" fill="#94a3b8">fetches discovered resources early</text>
+</svg>

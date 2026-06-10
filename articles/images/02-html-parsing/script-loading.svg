@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" font-family="ui-monospace, 'SF Mono', Menlo, monospace">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+    <pattern id="hatch3" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="#7f1d1d"/>
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#b91c1c" stroke-width="5"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="600" fill="#0f172a"/>
+
+  <!-- axis -->
+  <text x="200" y="52" font-size="19" fill="#64748b">HTML parsing</text>
+  <line x1="370" y1="46" x2="1140" y2="46" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ===== sync ===== -->
+  <text x="60" y="138" font-size="22" font-weight="bold" fill="#e2e8f0">sync</text>
+  <rect x="200" y="110" width="200" height="44" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="300" y="138" text-anchor="middle" font-size="16" fill="#bae6fd">parsing</text>
+  <rect x="400" y="110" width="240" height="44" fill="url(#hatch3)" stroke="#f87171" stroke-width="2"/>
+  <text x="520" y="138" text-anchor="middle" font-size="16" font-weight="bold" fill="#fecaca">fetch + exec</text>
+  <rect x="640" y="110" width="360" height="44" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="820" y="138" text-anchor="middle" font-size="16" fill="#bae6fd">parsing</text>
+  <text x="200" y="190" font-size="17" fill="#f87171">✗ blocks parsing: everything waits while the script downloads and executes</text>
+
+  <!-- ===== async ===== -->
+  <text x="60" y="288" font-size="22" font-weight="bold" fill="#e2e8f0">async</text>
+  <rect x="200" y="260" width="420" height="44" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="410" y="288" text-anchor="middle" font-size="16" fill="#bae6fd">parsing</text>
+  <rect x="620" y="260" width="130" height="44" fill="#78350f" stroke="#fbbf24" stroke-width="2"/>
+  <text x="685" y="288" text-anchor="middle" font-size="16" font-weight="bold" fill="#fde68a">exec</text>
+  <rect x="750" y="260" width="250" height="44" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="875" y="288" text-anchor="middle" font-size="16" fill="#bae6fd">parsing</text>
+  <line x1="400" y1="322" x2="620" y2="322" stroke="#a78bfa" stroke-width="3" stroke-dasharray="8 6"/>
+  <text x="425" y="348" font-size="16" fill="#c4b5fd">fetch in parallel</text>
+  <text x="200" y="382" font-size="17" fill="#fbbf24">⚠ executes as soon as the file arrives – interrupts parsing anywhere, order not guaranteed</text>
+
+  <!-- ===== defer ===== -->
+  <text x="60" y="468" font-size="22" font-weight="bold" fill="#e2e8f0">defer</text>
+  <rect x="200" y="440" width="800" height="44" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="600" y="468" text-anchor="middle" font-size="16" fill="#bae6fd">parsing runs uninterrupted to the end of the document</text>
+  <rect x="1000" y="440" width="120" height="44" fill="#064e3b" stroke="#34d399" stroke-width="2"/>
+  <text x="1060" y="468" text-anchor="middle" font-size="16" font-weight="bold" fill="#a7f3d0">exec</text>
+  <line x1="400" y1="502" x2="620" y2="502" stroke="#a78bfa" stroke-width="3" stroke-dasharray="8 6"/>
+  <text x="425" y="528" font-size="16" fill="#c4b5fd">fetch in parallel</text>
+  <text x="200" y="568" font-size="17" fill="#34d399">✓ executes after parsing, in document order – the default for all scripts</text>
+</svg>

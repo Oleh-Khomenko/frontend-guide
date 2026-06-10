@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" font-family="ui-monospace, 'SF Mono', Menlo, monospace">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34d399"/>
+    </marker>
+    <pattern id="hatch" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" fill="#7f1d1d"/>
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#b91c1c" stroke-width="5"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="440" fill="#0f172a"/>
+
+  <!-- time axis -->
+  <text x="50" y="56" font-size="19" fill="#64748b">time</text>
+  <line x1="110" y1="50" x2="1140" y2="50" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Network row -->
+  <text x="50" y="122" font-size="19" fill="#94a3b8">Network</text>
+  <rect x="200" y="95" width="130" height="42" rx="6" fill="#312e81" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="265" y="122" text-anchor="middle" font-size="17" fill="#c4b5fd">chunk 1</text>
+  <rect x="380" y="95" width="130" height="42" rx="6" fill="#312e81" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="445" y="122" text-anchor="middle" font-size="17" fill="#c4b5fd">chunk 2</text>
+  <rect x="560" y="95" width="130" height="42" rx="6" fill="#312e81" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="625" y="122" text-anchor="middle" font-size="17" fill="#c4b5fd">chunk 3</text>
+  <rect x="740" y="95" width="130" height="42" rx="6" fill="#312e81" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="805" y="122" text-anchor="middle" font-size="17" fill="#c4b5fd">chunk 4</text>
+
+  <!-- drop lines -->
+  <line x1="265" y1="137" x2="265" y2="200" stroke="#475569" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="445" y1="137" x2="445" y2="200" stroke="#475569" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="625" y1="137" x2="625" y2="200" stroke="#475569" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="805" y1="137" x2="805" y2="200" stroke="#475569" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+  <!-- Main thread row -->
+  <text x="50" y="232" font-size="19" fill="#94a3b8">Main thread</text>
+  <rect x="200" y="200" width="160" height="46" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="280" y="229" text-anchor="middle" font-size="16" fill="#bae6fd">tok+tree</text>
+  <rect x="360" y="200" width="140" height="46" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="430" y="229" text-anchor="middle" font-size="16" fill="#bae6fd">tok+tree</text>
+  <rect x="500" y="200" width="320" height="46" fill="url(#hatch)" stroke="#f87171" stroke-width="2"/>
+  <text x="660" y="229" text-anchor="middle" font-size="17" font-weight="bold" fill="#fecaca">SCRIPT · blocks ~200 ms</text>
+  <rect x="820" y="200" width="140" height="46" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="890" y="229" text-anchor="middle" font-size="16" fill="#bae6fd">tok+tree</text>
+  <rect x="960" y="200" width="140" height="46" fill="#0c4a6e" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="1030" y="229" text-anchor="middle" font-size="16" fill="#bae6fd">tok+tree</text>
+
+  <!-- Preload scanner row -->
+  <text x="50" y="352" font-size="19" fill="#94a3b8">Preload</text>
+  <text x="50" y="376" font-size="19" fill="#94a3b8">scanner</text>
+  <line x1="510" y1="246" x2="510" y2="340" stroke="#34d399" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="510" y1="340" x2="1110" y2="340" stroke="#34d399" stroke-width="4" marker-end="url(#arrowGreen)"/>
+  <text x="520" y="382" font-size="17" fill="#6ee7b7">scans HTML ahead and fetches main.css, app.js, hero.jpg</text>
+  <text x="520" y="408" font-size="17" fill="#6ee7b7">while the parser is blocked on the script</text>
+</svg>
