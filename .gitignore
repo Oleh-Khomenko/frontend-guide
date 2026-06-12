@@ -1,4 +1,6 @@
 .idea
+.playwright-mcp
+.DS_Store
 saas
 articles/posts
 articles/scripts
